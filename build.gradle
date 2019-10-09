@@ -4,7 +4,8 @@ plugins {
 }
 
 repositories {
-    jcenter()
+  //jcenter()
+  maven{url "https://artifactory.internal.synopsys.com/artifactory/blackduck-staging-repos"}
 }
 
 group 'com.synopsys.integration'
@@ -13,10 +14,37 @@ version = '0.0.1-SNAPSHOT'
 sourceSets {
     main {
         java { srcDirs = [] } // no source dirs for the java compiler
-        groovy { srcDir "src" }
+        groovy { 
+          srcDirs = ["src"]
+        }
     }
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.12'
+  implementation 'org.codehaus.groovy:groovy-all:2.5.6'
+  implementation group: 'org.codehaus.groovy', name: 'groovy-dateutil', version: '2.5.8'
+  
+  /*Jenkins Plugins*/
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-cps:2.67@jar'
+  implementation 'org.jenkins-ci.main:jenkins-core:2.102'
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-step-api:2.19@jar'
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-api:2.33@jar'
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-basic-steps:2.15@jar'
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-durable-task-step:2.30@jar'
+  implementation 'org.jenkins-ci.plugins:durable-task:1.29@jar'
+  implementation 'org.jenkins-ci.plugins.workflow:workflow-scm-step:2.7@jar'
+  implementation 'org.jenkins-ci.plugins:pipeline-utility-steps:2.3.1@jar'
+  implementation 'org.jenkins-ci.plugins:script-security:1.58@jar'
+  implementation 'com.cloudbees:groovy-cps:1.30'
+  implementation 'org.jenkins-ci.plugins:timestamper:1.10@jar'
+    
+  /*Test*/
+  testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
+  implementation 'com.homeaway.devtools.jenkins:jenkins-spock:2.0.1'
+  
+  /*Test configuration for using spock with homeaway testing library*/
+  implementation 'javax.servlet:javax.servlet-api:3.1.0'
+  implementation 'org.apache.commons:commons-csv:1.6'
+  implementation 'org.apache.maven:maven-model:2.0.10'
+  implementation 'org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M3'
 }
